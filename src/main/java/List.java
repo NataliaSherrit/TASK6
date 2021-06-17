@@ -1,6 +1,6 @@
-
 import java.io.*;
 import java.util.*;
+import java.util.HashMap;
 
 
 public class List {
@@ -17,6 +17,7 @@ public class List {
             }
         } catch (FileNotFoundException e) {
             System.out.printf("Файл не существует");
+            return;
         }
 
         String[] array = string.toString().split("\\s");
@@ -37,11 +38,30 @@ public class List {
             if (max < quant) {
                 max = quant;
                 maxL = s;
-
-
+            }
         }
-            System.out.println(s + " - " + quant + " шт.");
-    }
+        HashMap<String,Integer> keyValue = new HashMap<>();
+
+        for (int i=0; i<= array.length-1; i++) {
+            int counter = 0;
+            if (keyValue.containsKey(array[i])) {
+                counter = keyValue.get(array[i]);
+                keyValue.put(array[i], counter + 1);
+            } else {
+                keyValue.put(array[i], 1);
+            }
+            quant = 0;
+
+            for (int value : keyValue.values()) {
+                if (value > quant) {
+                    quant = value;
+                }
+            }
+        }
+        System.out.println("Слова в файле встречаются с такой частотой: " + keyValue);
         System.out.println("Самое часто встречающееся слово " + maxL + " встретилось " + max + " раз(а)");
-}}
+
+    }
+
+}
 
